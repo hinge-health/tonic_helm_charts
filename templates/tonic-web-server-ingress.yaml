@@ -29,19 +29,8 @@ spec:
   {{- if .Values.tonicai.ingress.class }}
   ingressClassName: {{ .Values.tonicai.ingress.class }}
   {{- end }}
-  rules:    
-  # Non-default SSL cert requires an FQDN.
-  # - host: localhost
-  #   http:
-  #     paths:
-  #       - path: /
-  #         pathType: Prefix
-  #         backend:
-  #           service:
-  #             name: tonic-web-server
-  #             port:
-  #               number: 443
-  - http: #default
+  rules:
+  - http:
       paths:
         - path: /
           pathType: Prefix
@@ -53,4 +42,8 @@ spec:
     {{- if (.Values.tonicai).ingress.host }}
     host: {{ .Values.tonicai.ingress.host }}
     {{- end }}
+  tls:
+  - hosts:
+    - {{ .Values.tonicai.ingress.host }}
+    secretName: tonic-web-server-tls
 {{- end }}
