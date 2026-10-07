@@ -165,4 +165,8 @@ spec:
       imagePullSecrets:
       - name: tonicai-build-writer-pull-secret
       serviceAccountName: {{ template "tonic.serviceAccountName" . }}
+      {{- with ((.Values.tonicai).worker).tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 status: {}
