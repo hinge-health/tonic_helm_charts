@@ -142,6 +142,10 @@ spec:
       imagePullSecrets:
       - name: tonicai-build-writer-pull-secret
       serviceAccountName: {{ template "tonic.serviceAccountName" . }}
+      {{- with ((.Values.tonicai).notifications).tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         {{- if .Values.readOnlyRootFilesystem }}
         - name: tmp
